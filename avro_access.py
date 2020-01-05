@@ -27,6 +27,6 @@ def client_query(client):
     df2=df.applymap(lambda x: len(str(x)))
     print(df2)
 
-    df.to_csv('consumed data_{}.csv'.format(date_time),index=False)
+    df.to_csv('consumed_data_{}.csv'.format(date_time),index=False)
 
 client_query(client)    
