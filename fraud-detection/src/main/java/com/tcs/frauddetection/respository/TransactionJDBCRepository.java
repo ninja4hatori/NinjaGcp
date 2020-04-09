@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
+import com.tcs.frauddetection.bean.Fraud;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -31,6 +32,19 @@ public class TransactionJDBCRepository {
                         transaction.getCard_id(),transaction.getAuth(),transaction.getCur_bb(),transaction.getCredit_utilize(),transaction.getAvg_bb(),transaction.getOverdraft(),transaction.getCc_age(),transaction.getCut(),transaction.getLoc(),transaction.getLoct(),transaction.getOdt(),transaction.getAmount(),transaction.getTransaction_date()
                 });
     }
+    public int insert_fraud(Fraud fraud) {
+        System.out.println(jdbcTemplate);
+        return jdbcTemplate.update("insert into fraud_transactions (card_id,auth,cur_bb,credit_utilize,avg_bb,overdraft,cc_age,cut,loc,loct,odt,amount,transaction_date,fraud_case,fraud_threshold) " + "values(? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)",
+                new Object[] {
+                        fraud.getCard_id(),fraud.getAuth(),fraud.getCur_bb(),fraud.getCredit_utilize(),fraud.getAvg_bb(),fraud.getOverdraft(),fraud.getCc_age(),fraud.getCut(),fraud.getLoc(),fraud.getLoct(),fraud.getOdt(),fraud.getAmount(),fraud.getTransaction_date(),fraud.getFraud_case(),fraud.getFraud_threshold()
+                });
+    }
+   /* public Optional < Transaction > findById(int card_id) {
+        return Optional.of(jdbcTemplate.queryForObject("select * from fraud_transactions where card_id=? limit 1", new Object[] {
+                        card_id
+                },
+                new BeanPropertyRowMapper < Fraud > (Fraud.class)));
+    }*/
     public List < Transaction > findAll() {
         return jdbcTemplate.query("select * from transactions", new transactionRowMapper());
     }

@@ -1,0 +1,41 @@
+create database creditcardfraud;
+
+use creditcardfraud;
+DROP TABLE IF EXISTS transactions;
+CREATE TABLE transactions(
+  id INT NOT NULL AUTO_INCREMENT,
+  card_id INT NOT NULL,
+  auth Int NOT NULL,
+  cur_bb Int NOT NULL,
+  credit_utilize Int NOT NULL,
+  avg_bb Int NOT NULL,
+  overdraft Int NOT NULL,
+  cc_age Int NOT NULL,
+  cut Int NOT NULL,
+  loc Int NOT NULL,
+  loct Int NOT NULL,
+  odt Int NOT NULL,
+  amount Int NOT NULL,
+  transaction_date Date NOT NULL,
+  PRIMARY KEY (id));
+
+use creditcardfraud;
+DROP TABLE IF EXISTS fraud_transactions;
+CREATE TABLE fraud_transactions(
+  id INT NOT NULL AUTO_INCREMENT,
+  card_id VARCHAR(20) NOT NULL,
+  auth VARCHAR(20) NOT NULL,
+  cur_bb VARCHAR(20) NOT NULL,
+  credit_utilize VARCHAR(20) NOT NULL,
+  avg_bb VARCHAR(20) NOT NULL,
+  overdraft VARCHAR(20) NOT NULL,
+  cc_age VARCHAR(20) NOT NULL,
+  cut VARCHAR(20) NOT NULL,
+  loc VARCHAR(20) NOT NULL,
+  loct VARCHAR(20) NOT NULL,
+  odt VARCHAR(20) NOT NULL,
+  amount VARCHAR(20) NOT NULL,
+  transaction_date Date NOT NULL,
+  fraud_case INT NOT NULL,
+  fraud_threshold FLOAT NOT NULL,
+  PRIMARY KEY (id));

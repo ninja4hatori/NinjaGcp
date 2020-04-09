@@ -14,16 +14,10 @@ public class Main {
 
     Creditcardfraud cc;
     @RequestMapping(value="/browse",method= RequestMethod.GET)
-    public String  upload() throws IOException {
-        String res = cc. browse();
-        if(res=="200")
-        {
-            return "{\"success\":200}";
-        }
-        else
-        {
-            return "{\"failed\":400}";
-        }
+    public Object upload() throws IOException {
+        Object res = cc. browse();
+        return res;
+
 
     }
     @RequestMapping(value="/calculate",method= RequestMethod.GET)
