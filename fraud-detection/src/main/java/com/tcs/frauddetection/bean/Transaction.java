@@ -3,6 +3,8 @@
  */
 package com.tcs.frauddetection.bean;
 
+import java.sql.Date;
+
 /**
  * @author Sudarshan
  *
@@ -21,11 +23,11 @@ public class Transaction{
     private int loct ;
     private int odt ;
     private int amount ;
-    private String transaction_date;
+    private Date transaction_date;
     public Transaction(){
 
     }
-    public Transaction(int card_id, int auth, int cur_bb, int credit_utilize, int avg_bb, int overdraft, int cc_age, int cut, int loc, int loct, int odt, int amount, String transaction_date) {
+    public Transaction(int card_id, int auth, int cur_bb, int credit_utilize, int avg_bb, int overdraft, int cc_age, int cut, int loc, int loct, int odt, int amount, Date transaction_date) {
 
         this.card_id = card_id;
         this.auth = auth;
@@ -165,11 +167,11 @@ public class Transaction{
         this.amount = amount;
     }
 
-    public String getTransaction_date() {
+    public Date getTransaction_date() {
         return transaction_date;
     }
 
-    public void setTransaction_date(String transaction_date) {
+    public void setTransaction_date(Date transaction_date) {
         this.transaction_date = transaction_date;
     }
 }

@@ -3,11 +3,15 @@
  */
 package com.tcs.frauddetection.controller;
 
+import java.util.List;
 import java.util.Optional;
 
+import com.tcs.frauddetection.bean.SearchTransactionRequestDto;
 import com.tcs.frauddetection.bean.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.tcs.frauddetection.bean.Transaction;
@@ -18,16 +22,32 @@ import com.tcs.frauddetection.respository.TransactionJDBCRepository;
  *
  */
 @RestController
-public class ApiController {
+public class FraudDetectionApiController {
 
 	/**
 	 * 
 	 */
-	public ApiController() {
-		// TODO Auto-generated constructor stub
+	
+	@Autowired
+	private TransactionJDBCRepository transactionJDBCRepository;
+	
+	@GetMapping("/transactions")
+	@CrossOrigin
+	public List<Transaction> searchTransactionByCard(@RequestParam(required=false, name="cardId") Integer cardId, @RequestParam(required=false, name="transactionDateFrom") String dateFrom,@RequestParam(required=false, name="transactionDateTo") String dateTo ) {
+		
+		SearchTransactionRequestDto searchRequestDto = new SearchTransactionRequestDto(cardId, dateFrom, dateTo);
+		return transactionJDBCRepository.searchTransactions(searchRequestDto);				
 	}
-	 @Autowired
-	 private TransactionJDBCRepository transactionJDBCRepository;
+	
+	@GetMapping("/fraud-transactions")
+	@CrossOrigin
+	public Object searchFraudTransactions(@RequestParam(required=false,name="td") String transactionDuration,
+			@RequestParam(required=false,name="tpFrom") String tpFrom,
+			@RequestParam(required=false,name="tpTo") String tpTo) {
+		return null;
+	}
+
+	 
 /*
 	@GetMapping("/")
 	public String hello() {
@@ -74,6 +94,6 @@ public class ApiController {
 		return response.toString();
 	}
 */
-	}
+}
 
 

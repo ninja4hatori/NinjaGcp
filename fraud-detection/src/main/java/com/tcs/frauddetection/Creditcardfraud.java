@@ -27,67 +27,8 @@ public class Creditcardfraud {
 
     @Autowired
     private  TransactionJDBCRepository transactionJDBCRepository;
-    public  String[][] data = new String[500][50];
+    public  static String[][] data = new String[500][50];
 
-    public Object browse() throws IOException {
-        String strline = null;
-        String[] temp;
-        String path ="E:\\spring_boot\\Creditcardfraud\\src\\main\\resources\\Dataset.txt";
-        FileInputStream fstream =new FileInputStream(path);
-        DataInputStream in =new DataInputStream(fstream);
-        BufferedReader br=new BufferedReader(new InputStreamReader(in));
-        Creditcardfraud cc=new Creditcardfraud();
-        Integer linecount=0;
-        while ((br.readLine()) != null) linecount++;
-
-        br.close();
-        FileInputStream fstream1 =new FileInputStream(path);
-        DataInputStream in1 =new DataInputStream(fstream1);
-        BufferedReader br1=new BufferedReader(new InputStreamReader(in1));
-        //String s;
-        System.out.println(linecount);
-
-        for(int i=0;i<=20;i++) {
-            strline = br1.readLine();
-            //System.out.println(strline);
-            temp = strline.split(",");
-            if (i != 0) {
-                //System.out.println(strline);
-                int[] temp_int = new int[temp.length];
-                int k = 0;
-                for (String textValue : temp) {
-                    temp_int[k] = Integer.parseInt(textValue);
-                    k++;
-                }
-                Date dt = new Date();
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                //String insert_query = null;
-
-
-                //transactionJDBCRepository.insert(new Transaction(temp_int[0],temp_int[1],temp_int[2],temp_int[3],temp_int[4],temp_int[5],temp_int[6],temp_int[7],temp_int[8],temp_int[9],temp_int[10],temp_int[11],df.format(dt)));
-                //insert_query="insert into transactions(card_id,auth,cur_bb,credit_utilize,avg_bb,overdraft,cc_age,cut,loc,loct,odt,amount,transaction_date) values ("+strline+",'"+df.format(dt)+"')";
-                //jdbc.execute(insert_query);
-            }
-        }
-
-            List<Transaction> listdata = transactionJDBCRepository.findAll();
-            //System.out.println(listdata);
-            Integer i=0;
-            for (Transaction fdata : listdata) {
-
-                String s = fdata.getCard_id() + "," + fdata.getAuth() + "," + fdata.getCur_bb() + "," + fdata.getCredit_utilize() + "," + fdata.getAvg_bb() + "," + fdata.getOverdraft() + "," + fdata.getCc_age() + "," + fdata.getCut() + "," + fdata.getLoc() + "," + fdata.getLoct() + "," + fdata.getOdt() + "," + fdata.getAmount();
-                System.out.println(s);
-                temp = s.split(",");
-
-                cc.data[i] = temp;
-                for(int j=0;j<=11;j++)
-                {
-                    System.out.println(cc.data[i][j]);
-                }
-                i++;
-            }
-            return listdata;
-    }
     public String find()
     {
         Date dt1 = new Date();
@@ -99,6 +40,7 @@ public class Creditcardfraud {
         float[][] od = new float[6][20];
         float[][] bb = new float[6][20];
         float[][] ds = new float[6][20];
+        String[] temp;
 
         float[][] initPop = new float[21][5];
         float[][] curPop = new float[21][5];
@@ -106,6 +48,19 @@ public class Creditcardfraud {
         float[][] finalPop = new float[21][5];
 
         float[] resValue =new float[21];
+        
+        List<Transaction> listdata = transactionJDBCRepository.findAll();
+        //System.out.println(listdata);
+        Integer ip=0;
+        for (Transaction fdata : listdata) {
+
+            String s = fdata.getCard_id() + "," + fdata.getAuth() + "," + fdata.getCur_bb() + "," + fdata.getCredit_utilize() + "," + fdata.getAvg_bb() + "," + fdata.getOverdraft() + "," + fdata.getCc_age() + "," + fdata.getCut() + "," + fdata.getLoc() + "," + fdata.getLoct() + "," + fdata.getOdt() + "," + fdata.getAmount();
+            System.out.println(s);
+            temp = s.split(",");
+
+            cc.data[ip] = temp;
+            ip++;
+        }
 
         Detection dt=new Detection();
         Evaluate ev= new Evaluate();
@@ -116,12 +71,13 @@ public class Creditcardfraud {
         {
 
             res= dt.ccfreq(cc.data[i]);
+            System.out.println(cc.data[i]);
             if(res[0]>=1)
             {
-                fre[l][m]=Float.valueOf(data[i][0]);m++;
+                fre[l][m]=Float.valueOf(cc.data[i][0]);m++;
                 fre[l][m]=res[1];
 
-                transactionJDBCRepository.insert_fraud(new Fraud(data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6],data[i][7],data[i][8],data[i][9],data[i][10],data[i][11],df.format(dt1),1,res[1]));
+                transactionJDBCRepository.insert_fraud(new Fraud(cc.data[i][0],cc.data[i][1],cc.data[i][2],data[i][3],data[i][4],data[i][5],data[i][6],data[i][7],data[i][8],data[i][9],data[i][10],data[i][11],df.format(dt1),1,res[1]));
 
                 l++;m=0;
             }

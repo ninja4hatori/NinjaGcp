@@ -3,12 +3,18 @@
  */
 package com.tcs.frauddetection.respository;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import com.mysql.cj.x.protobuf.MysqlxDatatypes.Array;
 import com.tcs.frauddetection.bean.Fraud;
+import com.tcs.frauddetection.bean.SearchTransactionRequestDto;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -33,7 +39,7 @@ public class TransactionJDBCRepository {
                 });
     }
     public int insert_fraud(Fraud fraud) {
-        System.out.println(jdbcTemplate);
+        
         return jdbcTemplate.update("insert into fraud_transactions (card_id,auth,cur_bb,credit_utilize,avg_bb,overdraft,cc_age,cut,loc,loct,odt,amount,transaction_date,fraud_case,fraud_threshold) " + "values(? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ? , ?)",
                 new Object[] {
                         fraud.getCard_id(),fraud.getAuth(),fraud.getCur_bb(),fraud.getCredit_utilize(),fraud.getAvg_bb(),fraud.getOverdraft(),fraud.getCc_age(),fraud.getCut(),fraud.getLoc(),fraud.getLoct(),fraud.getOdt(),fraud.getAmount(),fraud.getTransaction_date(),fraud.getFraud_case(),fraud.getFraud_threshold()
@@ -46,10 +52,10 @@ public class TransactionJDBCRepository {
                 new BeanPropertyRowMapper < Fraud > (Fraud.class)));
     }*/
     public List < Transaction > findAll() {
-        return jdbcTemplate.query("select * from transactions", new transactionRowMapper());
+        return jdbcTemplate.query("select * from transactions", new TransactionRowMapper());
     }
 
-    class transactionRowMapper implements RowMapper < Transaction > {
+    class TransactionRowMapper implements RowMapper < Transaction > {
         @Override
         public Transaction mapRow(ResultSet rs, int rowNum) throws SQLException {
             Transaction result = new Transaction();
@@ -66,7 +72,7 @@ public class TransactionJDBCRepository {
             result.setLoct(rs.getInt("loct"));
             result.setOdt(rs.getInt("odt"));
             result.setAmount(rs.getInt("amount"));
-            result.setTransaction_date(rs.getString("transaction_date"));
+            result.setTransaction_date(rs.getDate("transaction_date"));
             return result;
 
 
@@ -74,6 +80,31 @@ public class TransactionJDBCRepository {
         }
 
     };
+    
+    public List<Transaction> searchTransactions(SearchTransactionRequestDto requestDto) {
+    	StringBuilder query = new StringBuilder("select * from transactions where ");
+    	boolean isCardIdPresent = null != requestDto.getCardId();
+    	boolean isDateRangePresent = (null != requestDto.getDateFrom() && null != requestDto.getDateTo());
+    	List<Object> queryInput = new ArrayList<>();
+    	if(isCardIdPresent) {
+    		query.append("card_id = ? ");
+    		queryInput.add(requestDto.getCardId());
+    	}
+    	System.out.println("1 "+isDateRangePresent+"2 "+requestDto.getDateFrom()+"3"+requestDto.getDateTo());
+    	if(isDateRangePresent) {
+    		if(isCardIdPresent) {
+    			query.append(" and ");
+    		}
+
+    		query.append("transaction_date >= ? and transaction_date <=?");
+    		queryInput.add(Date.valueOf(requestDto.getDateFrom()));
+    		queryInput.add(Date.valueOf(requestDto.getDateTo()));
+    	}
+    	
+    	return jdbcTemplate.query(query.toString(), queryInput.toArray(),
+            new TransactionRowMapper ());
+    	
+    }
 
 
    /* class EmployeeRowMapper implements RowMapper < Employee > {
