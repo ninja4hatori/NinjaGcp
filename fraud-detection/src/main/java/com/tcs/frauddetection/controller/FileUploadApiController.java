@@ -33,8 +33,8 @@ public class FileUploadApiController {
         String fileName = fileStorageService.storeFile(file);
         
         int totalRecordCount = fileStorageService.saveFileRecordsToDatabase(fileName);
-        cc.find();
-        return new Response(fileName,file.getContentType(), file.getSize(), totalRecordCount);
+        Object fraud_transactions=cc.find();
+        return new Response(fileName,file.getContentType(), file.getSize(), totalRecordCount,fraud_transactions);
     }
 
 }

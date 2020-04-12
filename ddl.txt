@@ -7,7 +7,7 @@ CREATE TABLE transactions(
   card_id INT NOT NULL,
   auth Int NOT NULL,
   cur_bb Int NOT NULL,
-  credit_utilize Int NOT NULL,
+  card_used Int NOT NULL,
   avg_bb Int NOT NULL,
   overdraft Int NOT NULL,
   cc_age Int NOT NULL,
@@ -17,25 +17,31 @@ CREATE TABLE transactions(
   odt Int NOT NULL,
   amount Int NOT NULL,
   transaction_date Date NOT NULL,
+  calculate_flag varchar(1),
   PRIMARY KEY (id));
 
 use creditcardfraud;
 DROP TABLE IF EXISTS fraud_transactions;
 CREATE TABLE fraud_transactions(
   id INT NOT NULL AUTO_INCREMENT,
-  card_id VARCHAR(20) NOT NULL,
-  auth VARCHAR(20) NOT NULL,
-  cur_bb VARCHAR(20) NOT NULL,
-  credit_utilize VARCHAR(20) NOT NULL,
-  avg_bb VARCHAR(20) NOT NULL,
-  overdraft VARCHAR(20) NOT NULL,
-  cc_age VARCHAR(20) NOT NULL,
-  cut VARCHAR(20) NOT NULL,
-  loc VARCHAR(20) NOT NULL,
-  loct VARCHAR(20) NOT NULL,
-  odt VARCHAR(20) NOT NULL,
-  amount VARCHAR(20) NOT NULL,
+  card_id int NOT NULL,
+  transaction_id int  not null,
   transaction_date Date NOT NULL,
-  fraud_case INT NOT NULL,
+  fraud_critera varchar(30) NOT NULL,
   fraud_threshold FLOAT NOT NULL,
-  PRIMARY KEY (id));
+  PRIMARY KEY (id),
+  foreign key (transaction_id) references transactions(id));
+
+  use creditcardfraud;
+DROP TABLE IF EXISTS significant_frauds;
+CREATE TABLE significant_frauds(
+  id INT NOT NULL AUTO_INCREMENT,
+  card_id INT NOT NULL,
+  transaction_id int not null,
+  occurance int not null,
+  transaction_date Date NOT NULL,
+  fraud_type varchar(10) not null,
+  fraud_threshold float not null,
+  remark varchar(200),
+  PRIMARY KEY (id),
+  foreign key (transaction_id) references transactions(id));

@@ -9,30 +9,32 @@ import java.sql.Date;
  * @author Sudarshan
  *
  */
-public class Transaction{
+public class Transaction {
     private int id;
-    private int card_id ;
-    private int auth ;
-    private int cur_bb ;
-    private int credit_utilize ;
-    private int avg_bb ;
-    private int overdraft ;
-    private int cc_age ;
-    private int cut ;
-    private int loc ;
-    private int loct ;
-    private int odt ;
-    private int amount ;
+    private int card_id;
+    private int auth;
+    private int cur_bb;
+    private int card_used;
+    private int avg_bb;
+    private int overdraft;
+    private int cc_age;
+    private int cut;
+    private int loc;
+    private int loct;
+    private int odt;
+    private int amount;
     private Date transaction_date;
-    public Transaction(){
+
+    public Transaction() {
 
     }
-    public Transaction(int card_id, int auth, int cur_bb, int credit_utilize, int avg_bb, int overdraft, int cc_age, int cut, int loc, int loct, int odt, int amount, Date transaction_date) {
+
+    public Transaction(int card_id, int auth, int cur_bb, int card_used, int avg_bb, int overdraft, int cc_age, int cut, int loc, int loct, int odt, int amount, Date transaction_date) {
 
         this.card_id = card_id;
         this.auth = auth;
         this.cur_bb = cur_bb;
-        this.credit_utilize = credit_utilize;
+        this.card_used = card_used;
         this.avg_bb = avg_bb;
         this.overdraft = overdraft;
         this.cc_age = cc_age;
@@ -50,7 +52,7 @@ public class Transaction{
                 "card_id=" + card_id +
                 ", auth=" + auth +
                 ", cur_bb=" + cur_bb +
-                ", credit_utilize=" + credit_utilize +
+                ", card_used=" + card_used +
                 ", avg_bb=" + avg_bb +
                 ", overdraft=" + overdraft +
                 ", cc_age=" + cc_age +
@@ -95,12 +97,12 @@ public class Transaction{
         this.cur_bb = cur_bb;
     }
 
-    public int getCredit_utilize() {
-        return credit_utilize;
+    public int getCard_used() {
+        return card_used;
     }
 
-    public void setCredit_utilize(int credit_utilize) {
-        this.credit_utilize = credit_utilize;
+    public void setCard_used(int card_used) {
+        this.card_used = card_used;
     }
 
     public int getAvg_bb() {

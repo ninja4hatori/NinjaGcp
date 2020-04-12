@@ -6,6 +6,7 @@ package com.tcs.frauddetection.controller;
 import java.util.List;
 import java.util.Optional;
 
+import com.tcs.frauddetection.bean.SearchFraudTransactionRequestDto;
 import com.tcs.frauddetection.bean.SearchTransactionRequestDto;
 import com.tcs.frauddetection.bean.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,13 +40,15 @@ public class FraudDetectionApiController {
 		return transactionJDBCRepository.searchTransactions(searchRequestDto);				
 	}
 	
-	@GetMapping("/fraud-transactions")
+/*	@GetMapping("/fraud-transactions")
 	@CrossOrigin
-	public Object searchFraudTransactions(@RequestParam(required=false,name="td") String transactionDuration,
-			@RequestParam(required=false,name="tpFrom") String tpFrom,
-			@RequestParam(required=false,name="tpTo") String tpTo) {
-		return null;
-	}
+	public Object searchFraudTransactions(@RequestParam(required=false,name="fraudDurartion") Integer fraudDuration,
+			@RequestParam(required=false,name="fraudDateFrom") String fdFrom,
+			@RequestParam(required=false,name="FraudDateTo") String fdTo) {
+		SearchFraudTransactionRequestDto searchRequestDto = new SearchFraudTransactionRequestDto(fraudDuration, fdFrom, fdTo);
+		return transactionJDBCRepository.searchFraudTransactions(searchRequestDto);
+
+	}*/
 
 	 
 /*

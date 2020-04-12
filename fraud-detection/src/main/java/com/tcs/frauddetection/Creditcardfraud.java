@@ -1,23 +1,21 @@
 package com.tcs.frauddetection;
 
+
 import com.tcs.frauddetection.bean.Fraud;
+import com.tcs.frauddetection.bean.Significant_fraud;
 import com.tcs.frauddetection.bean.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import com.tcs.frauddetection.respository.TransactionJDBCRepository;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import java.io.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
+
+import static java.lang.Integer.parseInt;
 
 @Service
 
@@ -29,7 +27,7 @@ public class Creditcardfraud {
     private  TransactionJDBCRepository transactionJDBCRepository;
     public  static String[][] data = new String[500][50];
 
-    public String find()
+    public Object find()
     {
         Date dt1 = new Date();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -49,12 +47,12 @@ public class Creditcardfraud {
 
         float[] resValue =new float[21];
         
-        List<Transaction> listdata = transactionJDBCRepository.findAll();
+        List<Transaction> listdata = transactionJDBCRepository.findAlltransactions();
         //System.out.println(listdata);
         Integer ip=0;
         for (Transaction fdata : listdata) {
 
-            String s = fdata.getCard_id() + "," + fdata.getAuth() + "," + fdata.getCur_bb() + "," + fdata.getCredit_utilize() + "," + fdata.getAvg_bb() + "," + fdata.getOverdraft() + "," + fdata.getCc_age() + "," + fdata.getCut() + "," + fdata.getLoc() + "," + fdata.getLoct() + "," + fdata.getOdt() + "," + fdata.getAmount();
+            String s = fdata.getCard_id() + "," + fdata.getAuth() + "," + fdata.getCur_bb() + "," + fdata.getCard_used() + "," + fdata.getAvg_bb() + "," + fdata.getOverdraft() + "," + fdata.getCc_age() + "," + fdata.getCut() + "," + fdata.getLoc() + "," + fdata.getLoct() + "," + fdata.getOdt() + "," + fdata.getAmount();
             System.out.println(s);
             temp = s.split(",");
 
@@ -76,8 +74,13 @@ public class Creditcardfraud {
             {
                 fre[l][m]=Float.valueOf(cc.data[i][0]);m++;
                 fre[l][m]=res[1];
-
-                transactionJDBCRepository.insert_fraud(new Fraud(cc.data[i][0],cc.data[i][1],cc.data[i][2],data[i][3],data[i][4],data[i][5],data[i][6],data[i][7],data[i][8],data[i][9],data[i][10],data[i][11],df.format(dt1),1,res[1]));
+                List <Transaction> transaction_id=transactionJDBCRepository.getTransactionId(parseInt(data[i][0]));
+                int t_id=0;
+                for(Transaction fdata : transaction_id)
+                {
+                    t_id= fdata.getId();
+                }
+                transactionJDBCRepository.insert_fraud(new Fraud(parseInt(data[i][0]),t_id,df.format(dt1),"FREQ",res[1]));
 
                 l++;m=0;
             }
@@ -92,7 +95,14 @@ public class Creditcardfraud {
             {
                 loc[l][m]=Float.valueOf(cc.data[i][0]);m++;
                 loc[l][m]=res[1];
-                transactionJDBCRepository.insert_fraud(new Fraud(data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6],data[i][7],data[i][8],data[i][9],data[i][10],data[i][11],df.format(dt1),2,res[1]));
+                List <Transaction> transaction_id=transactionJDBCRepository.getTransactionId(parseInt(data[i][0]));
+                int t_id=0;
+                for(Transaction fdata : transaction_id)
+                {
+                    t_id= fdata.getId();
+                }
+                transactionJDBCRepository.insert_fraud(new Fraud(parseInt(data[i][0]),t_id,df.format(dt1),"LOCATION",res[1]));
+
                 l++;m=0;
             }
             initPop[i][1]=res[1];
@@ -111,7 +121,14 @@ public class Creditcardfraud {
             {
                 od[l][m]=Float.valueOf(cc.data[i][0]);m++;
                 od[l][m]=res[1];
-                transactionJDBCRepository.insert_fraud(new Fraud(data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6],data[i][7],data[i][8],data[i][9],data[i][10],data[i][11],df.format(dt1),3,res[1]));
+                List <Transaction> transaction_id=transactionJDBCRepository.getTransactionId(parseInt(data[i][0]));
+                int t_id=0;
+                for(Transaction fdata : transaction_id)
+                {
+                    t_id= fdata.getId();
+                }
+                transactionJDBCRepository.insert_fraud(new Fraud(parseInt(data[i][0]),t_id,df.format(dt1),"OVER_DRAFT",res[1]));
+
                 l++;m=0;
             }
             initPop[i][2]=res[1];
@@ -129,7 +146,14 @@ public class Creditcardfraud {
             {
                 bb[l][m]=Float.valueOf(cc.data[i][0]);m++;
                 bb[l][m]=res[1];
-                transactionJDBCRepository.insert_fraud(new Fraud(data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6],data[i][7],data[i][8],data[i][9],data[i][10],data[i][11],df.format(dt1),4,res[1]));
+                List <Transaction> transaction_id=transactionJDBCRepository.getTransactionId(parseInt(data[i][0]));
+                int t_id=0;
+                for(Transaction fdata : transaction_id)
+                {
+                    t_id= fdata.getId();
+                }
+                transactionJDBCRepository.insert_fraud(new Fraud(parseInt(data[i][0]),t_id,df.format(dt1),"BALANCE",res[1]));
+
                 l++;m=0;
             }
 
@@ -148,7 +172,14 @@ public class Creditcardfraud {
             {
                 ds[l][m]=Float.valueOf(cc.data[i][0]);m++;
                 ds[l][m]=res[1];
-                transactionJDBCRepository.insert_fraud(new Fraud(data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6],data[i][7],data[i][8],data[i][9],data[i][10],data[i][11],df.format(dt1),5,res[1]));
+                List <Transaction> transaction_id=transactionJDBCRepository.getTransactionId(parseInt(data[i][0]));
+                int t_id=0;
+                for(Transaction fdata : transaction_id)
+                {
+                    t_id= fdata.getId();
+                }
+                transactionJDBCRepository.insert_fraud(new Fraud(parseInt(data[i][0]),t_id,df.format(dt1),"DAIILY_SPENDING",res[1]));
+
                 l++;m=0;
             }
             initPop[i][4]=res[1];
@@ -224,7 +255,13 @@ public class Creditcardfraud {
         {
             if((finalresult[i][2])>= criti)
             {
-                //transactionJDBCRepository.insert_fraud(new Fraud(data[i][0],data[i][1],data[i][2],data[i][3],data[i][4],data[i][5],data[i][6],data[i][7],data[i][8],data[i][9],data[i][10],data[i][11],df.format(dt1),5,res[1]));
+                List <Transaction> transaction_id=transactionJDBCRepository.getTransactionId((int) finalresult[i][0]);
+                int t_id=0;
+                for(Transaction fdata : transaction_id)
+                {
+                    t_id= fdata.getId();
+                }
+                transactionJDBCRepository.insert_Significant_fraud(new Significant_fraud((int) finalresult[i][0],t_id,(int)finalresult[i][1],df.format(dt1),"CRITICAL",finalresult[i][2]));
 
                 System.out.println(" Credit Card with ID "+finalresult[i][0]+" is detected as fraud with "+finalresult[i][1]+" occurance and its crical value is "+ finalresult[i][2]);
                 System.out.println(" ");
@@ -239,6 +276,15 @@ public class Creditcardfraud {
         {
             if(((finalresult[i][2])>= monit) && ((finalresult[i][2])< criti))
             {
+                List <Transaction> transaction_id=transactionJDBCRepository.getTransactionId((int) finalresult[i][0]);
+                int t_id=0;
+                for(Transaction fdata : transaction_id)
+                {
+                    t_id= fdata.getId();
+                }
+                transactionJDBCRepository.insert_Significant_fraud(new Significant_fraud((int) finalresult[i][0],t_id,(int)finalresult[i][1],df.format(dt1),"MONITOR",finalresult[i][2]));
+
+                //transactionJDBCRepository.insert_critical_fraud(new Critical_fraud(finalresult[i][0],finalresult[i][1],finalresult[i][2],2,df.format(dt1)));
                System.out.println("Credit Card with ID "+finalresult[i][0]+" is detected as fraud with "+finalresult[i][1]+" occurance and its crical value is "+ finalresult[i][2]);
                 System.out.println(" ");
 
@@ -250,16 +296,26 @@ public class Creditcardfraud {
         System.out.println("--------------------------------------- ");
         for(int i=0;i<=19;i++)
         {
-            if(((finalresult[i][2])>= ordin) && ((finalresult[i][2])< monit))
+            if(((finalresult[i][2])< monit) && (finalresult[i][1])>0.0)
             {
                 System.out.println("Credit Card with ID "+finalresult[i][0]+" is detected as fraud with "+finalresult[i][1]+" occurance and its crical value is "+ finalresult[i][2]);
+                List <Transaction> transaction_id=transactionJDBCRepository.getTransactionId((int) finalresult[i][0]);
+                int t_id=0;
+                for(Transaction fdata : transaction_id)
+                {
+                    t_id= fdata.getId();
+                }
+                transactionJDBCRepository.insert_Significant_fraud(new Significant_fraud((int) finalresult[i][0],t_id,(int)finalresult[i][1],df.format(dt1),"ORDINARY",finalresult[i][2]));
 
             }
         }
+        transactionJDBCRepository.updateTransactionFlag();
 
 
-
-        return "200";
+        List<Fraud> listfraud = transactionJDBCRepository.findAllfraud();
+        List<Significant_fraud> listSignificantFraud = transactionJDBCRepository.findAllSignificantfraud();
+        Object[] fraud_transactions= new Object[]{listfraud,listSignificantFraud};
+        return fraud_transactions;
 
 
 }
