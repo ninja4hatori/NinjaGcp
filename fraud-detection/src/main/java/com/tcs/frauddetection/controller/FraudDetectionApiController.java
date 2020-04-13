@@ -40,15 +40,20 @@ public class FraudDetectionApiController {
 		return transactionJDBCRepository.searchTransactions(searchRequestDto);				
 	}
 	
-/*	@GetMapping("/fraud-transactions")
+	@GetMapping("/fraud-transactions")
 	@CrossOrigin
 	public Object searchFraudTransactions(@RequestParam(required=false,name="fraudDurartion") Integer fraudDuration,
 			@RequestParam(required=false,name="fraudDateFrom") String fdFrom,
 			@RequestParam(required=false,name="FraudDateTo") String fdTo) {
 		SearchFraudTransactionRequestDto searchRequestDto = new SearchFraudTransactionRequestDto(fraudDuration, fdFrom, fdTo);
-		return transactionJDBCRepository.searchFraudTransactions(searchRequestDto);
+		SearchFraudTransactionRequestDto significantRequestDto = new SearchFraudTransactionRequestDto(fraudDuration, fdFrom, fdTo);
+		Object fraud_transaction=transactionJDBCRepository.searchFraudTransactions(searchRequestDto);
+		Object significnt_transaction=transactionJDBCRepository.searchSignificantFraud(significantRequestDto);
+		Object[] AllFraudTransactions= new Object[]{fraud_transaction,significnt_transaction};
+		System.out.println(AllFraudTransactions);
+		return AllFraudTransactions;
 
-	}*/
+	}
 
 	 
 /*

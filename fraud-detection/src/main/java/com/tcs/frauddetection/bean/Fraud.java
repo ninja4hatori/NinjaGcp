@@ -87,6 +87,10 @@ public class Fraud {
             year=year-1;
             month=month-Duration;
         }
+        else
+        {
+            month=month-duration-12;
+        }
         String d= year+"-"+month+"-"+date;
         return d;
     }

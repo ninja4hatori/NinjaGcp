@@ -108,7 +108,7 @@ public class TransactionJDBCRepository {
     }
 
 
- /*   public List<Fraud> searchFraudTransactions(SearchFraudTransactionRequestDto requestDto) {
+   public List<Fraud> searchFraudTransactions(SearchFraudTransactionRequestDto requestDto) {
         StringBuilder query = new StringBuilder("select * from fraud_transactions where ");
         boolean isFraudDurationPresent = null != requestDto.getFrudDuration();
         boolean isDateRangePresent = (null != requestDto.getDateFrom() && null != requestDto.getDateTo());
@@ -117,24 +117,44 @@ public class TransactionJDBCRepository {
             int Monthduration=requestDto.getFrudDuration();
             Fraud f=new Fraud();
             String datefrom=f.getDatefromDuration(Monthduration);
-            query.append("transaction_date >= "+datefrom+" and transaction_date <="+df.format(dt1));
+            query.append("transaction_date >= '"+datefrom+"' and transaction_date <='"+df.format(dt1)+"'");
+            System.out.println(query);
         }
         System.out.println("1 "+isDateRangePresent+"2 "+requestDto.getDateFrom()+"3"+requestDto.getDateTo());
         if(isDateRangePresent) {
-            if(isCardIdPresent) {
-                query.append(" and ");
-            }
-
             query.append("transaction_date >= ? and transaction_date <=?");
             queryInput.add(Date.valueOf(requestDto.getDateFrom()));
             queryInput.add(Date.valueOf(requestDto.getDateTo()));
         }
 
         return jdbcTemplate.query(query.toString(), queryInput.toArray(),
-                new TransactionRowMapper ());
+                new fraudRowMapper ());
 
     }
-*/
+    public List<Significant_fraud> searchSignificantFraud(SearchFraudTransactionRequestDto requestDto) {
+        StringBuilder query = new StringBuilder("select * from significant_frauds where ");
+        boolean isFraudDurationPresent = null != requestDto.getFrudDuration();
+        boolean isDateRangePresent = (null != requestDto.getDateFrom() && null != requestDto.getDateTo());
+        List<Object> queryInput = new ArrayList<>();
+        if(isFraudDurationPresent) {
+            int Monthduration=requestDto.getFrudDuration();
+            Fraud f=new Fraud();
+            String datefrom=f.getDatefromDuration(Monthduration);
+            query.append("transaction_date >= '"+datefrom+"' and transaction_date <='"+df.format(dt1)+"'");
+        }
+        System.out.println("1 "+isDateRangePresent+"2 "+requestDto.getDateFrom()+"3"+requestDto.getDateTo());
+        if(isDateRangePresent) {
+            query.append("transaction_date >= ? and transaction_date <=?");
+            queryInput.add(Date.valueOf(requestDto.getDateFrom()));
+            queryInput.add(Date.valueOf(requestDto.getDateTo()));
+        }
+
+        return jdbcTemplate.query(query.toString(), queryInput.toArray(),
+                new SignificantfraudRowMapper());
+
+    }
+
+
     java.util.Date dt1 = new java.util.Date();
     DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
