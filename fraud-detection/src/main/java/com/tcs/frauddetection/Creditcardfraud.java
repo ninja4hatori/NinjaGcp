@@ -11,9 +11,7 @@ import org.springframework.stereotype.Service;
 import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import static java.lang.Integer.parseInt;
 
@@ -27,7 +25,7 @@ public class Creditcardfraud {
     private  TransactionJDBCRepository transactionJDBCRepository;
     public  static String[][] data = new String[500][50];
 
-    public Object find()
+    public Map<String, Object> find()
     {
         Date dt1 = new Date();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -314,8 +312,13 @@ public class Creditcardfraud {
 
         List<Fraud> listfraud = transactionJDBCRepository.findAllfraud();
         List<Significant_fraud> listSignificantFraud = transactionJDBCRepository.findAllSignificantfraud();
-        Object[] fraud_transactions= new Object[]{listfraud,listSignificantFraud};
-        return fraud_transactions;
+        Map<String, Object > fraudMap = new HashMap<>();
+        fraudMap.put("significant_transactions",listSignificantFraud);
+        fraudMap.put("fraud_transactions", listfraud);
+
+
+
+        return fraudMap;
 
 
 }

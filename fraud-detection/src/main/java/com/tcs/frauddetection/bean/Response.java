@@ -3,6 +3,8 @@
  */
 package com.tcs.frauddetection.bean;
 
+import java.util.Map;
+
 /**
  * @author Sudarshan
  *
@@ -15,7 +17,7 @@ public class Response {
      * @param contentType
      * @param size
      * @param totalRecordCount
-     * @param fraud_transactions
+     * @param frauds
      */
 
 	
@@ -23,14 +25,14 @@ public class Response {
 	private String fileType;
 	private long size;
 	private int totalRecordsInFile;
-	private Object fraud_transactions;
+	private Map<String,Object> frauds;
 
-	public Response(String fileName, String fileType, long size, int totalRecordsInFile,Object fraud_transactions) {
+	public Response(String fileName, String fileType, long size, int totalRecordsInFile, Map<String,Object> frauds) {
 		this.fileName = fileName;
 	    this.fileType = fileType;
 	    this.size = size;
 	    this.totalRecordsInFile = totalRecordsInFile;
-	    this.fraud_transactions=fraud_transactions;
+	    this.frauds=frauds;
 	}
 
 	/**
@@ -82,12 +84,12 @@ public class Response {
 		return size;
 	}
 
-	public Object getFraud_transactions() {
-		return fraud_transactions;
+	public Map<String,Object> getFraud_transactions() {
+		return frauds;
 	}
 
-	public void setFraud_transactions(Object fraud_transactions) {
-		this.fraud_transactions = fraud_transactions;
+	public void setFraud_transactions(Map<String,Object> frauds) {
+		this.frauds = frauds;
 	}
 
 	/**

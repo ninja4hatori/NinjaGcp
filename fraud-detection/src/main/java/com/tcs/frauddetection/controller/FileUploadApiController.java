@@ -14,6 +14,8 @@ import com.tcs.frauddetection.Creditcardfraud;
 import com.tcs.frauddetection.bean.Response;
 import com.tcs.frauddetection.service.FileStorageService;
 
+import java.util.Map;
+
 /**
  * @author Sudarshan
  *
@@ -33,8 +35,8 @@ public class FileUploadApiController {
         String fileName = fileStorageService.storeFile(file);
         
         int totalRecordCount = fileStorageService.saveFileRecordsToDatabase(fileName);
-        Object fraud_transactions=cc.find();
-        return new Response(fileName,file.getContentType(), file.getSize(), totalRecordCount,fraud_transactions);
+        Map<String,Object> frauds=cc.find();
+        return new Response(fileName,file.getContentType(), file.getSize(), totalRecordCount,frauds);
     }
 
 }

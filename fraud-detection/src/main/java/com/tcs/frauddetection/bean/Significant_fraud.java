@@ -87,4 +87,5 @@ public class Significant_fraud {
         this.fraud_threshold = fraud_threshold;
 
     }
+
 }
