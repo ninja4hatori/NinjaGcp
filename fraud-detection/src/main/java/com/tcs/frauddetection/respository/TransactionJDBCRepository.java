@@ -217,8 +217,10 @@ public class TransactionJDBCRepository {
     public int updateTransactionFlag() {
         return jdbcTemplate.update("update transactions " + " set calculate_flag = 'P' " + " where calculate_flag = 'N'");
     }
-    public int updateRemark(UpdateRemarks updateRemarks) {
-        return jdbcTemplate.update("update significant_frauds " + " set remark = '"+updateRemarks.getRemark()+"' where transaction_id = "+updateRemarks.getTransaction_id()+"");
+    public Object updateRemark(UpdateRemarks updateRemarks) {
+        jdbcTemplate.update("update significant_frauds " + " set remark = '"+updateRemarks.getRemark()+"' where transaction_id = "+updateRemarks.getTransaction_id()+"");
+        return jdbcTemplate.query("select * from significant_frauds where transaction_id=" + updateRemarks.getTransaction_id()+ "", new SignificantfraudRowMapper());
+
     }
 
    /* class EmployeeRowMapper implements RowMapper < Employee > {

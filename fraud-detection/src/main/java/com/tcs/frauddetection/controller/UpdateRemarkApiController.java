@@ -8,7 +8,9 @@ import com.tcs.frauddetection.respository.TransactionJDBCRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class UpdateRemarkApiController {
@@ -17,9 +19,11 @@ public class UpdateRemarkApiController {
     private TransactionJDBCRepository transactionJDBCRepository;
     @RequestMapping(method=RequestMethod.POST,value="/update-remarks")
     @CrossOrigin
-    public int updateRemark(@RequestBody Significant_fraud significantFraud){
+    public Map<String,Object> updateRemark(@RequestBody Significant_fraud significantFraud){
         UpdateRemarks updateremark = new UpdateRemarks(significantFraud.getTransaction_id(),significantFraud.getRemark());
-        return transactionJDBCRepository.updateRemark(updateremark);
+        Map<String,Object> updatedData= new HashMap<>();
+         updatedData.put("Updated_Record",transactionJDBCRepository.updateRemark(updateremark));
+         return updatedData;
     }
 
 }
