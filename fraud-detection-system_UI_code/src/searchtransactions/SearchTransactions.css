@@ -1,0 +1,25 @@
+.Search-Transactions {
+    margin-left: 4%;
+    margin-top: 4%;
+    font-weight: 500;
+    width: 50%;
+}
+
+.Input-Textbox {
+    margin-left: 30px;
+}
+
+.Input-Datepicker {
+    margin-left: 30px;
+}
+
+.Submit-Button {
+    float:right;
+    width: 100px;
+    color:white !important;
+  }
+
+.Search-Dropdown-Options {
+      margin-left: 30px;
+      width: 178px;
+  }
