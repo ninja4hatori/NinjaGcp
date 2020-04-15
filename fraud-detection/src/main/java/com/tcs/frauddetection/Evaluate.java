@@ -1,15 +1,15 @@
 package com.tcs.frauddetection;
 
 public class Evaluate {
-	
-	
-	public int[] findElite(float[][] a) {
+
+
+	public int[] findElite(float[][] a,int row_s) {
 		int[] res = new int[2];
-		float[][] temp =new float[21][5];
+		float[][] temp =new float[row_s+1][5];
 		temp=a;
 		float sum=0,sum1=0,sum2=0;
 		int e1=0,e2=0;
-		for(int i=1;i<=20;i++)
+		for(int i=0;i<row_s;i++)
 			{
 			sum=temp[i][0]+temp[i][1]+temp[i][2]+temp[i][3]+temp[i][4];
 				

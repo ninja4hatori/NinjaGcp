@@ -28,15 +28,18 @@ public class FileUploadApiController {
 	
 	@Autowired
 	Creditcardfraud cc;
+
 	
 	@PostMapping("/uploadFile")
 	@CrossOrigin
     public Response uploadFile(@RequestParam("file") MultipartFile file) {
+
         String fileName = fileStorageService.storeFile(file);
-        
-        int totalRecordCount = fileStorageService.saveFileRecordsToDatabase(fileName);
-        Map<String,Object> frauds=cc.find();
-        return new Response(fileName,file.getContentType(), file.getSize(), totalRecordCount,frauds);
+
+         int totalRecordCount = fileStorageService.saveFileRecordsToDatabase(fileName);
+        Map<String,Object> frauds=cc.find(totalRecordCount);
+
+        return new Response(fileName,file.getContentType(), file.getSize(),totalRecordCount,frauds);
     }
 
 }

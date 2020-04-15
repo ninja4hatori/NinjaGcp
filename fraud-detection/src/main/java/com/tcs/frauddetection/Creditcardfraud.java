@@ -4,6 +4,7 @@ package com.tcs.frauddetection;
 import com.tcs.frauddetection.bean.Fraud;
 import com.tcs.frauddetection.bean.Significant_fraud;
 import com.tcs.frauddetection.bean.Transaction;
+import com.tcs.frauddetection.controller.FileUploadApiController;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.tcs.frauddetection.respository.TransactionJDBCRepository;
 import org.springframework.stereotype.Service;
@@ -25,25 +26,27 @@ public class Creditcardfraud {
     private  TransactionJDBCRepository transactionJDBCRepository;
     public  static String[][] data = new String[500][50];
 
-    public Map<String, Object> find()
+    public Map<String, Object> find(int row_s)
     {
+        System.out.println(row_s);
+        int col_s=11;
         Date dt1 = new Date();
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Creditcardfraud cc=new Creditcardfraud();
         float[] res = null;
-        float[][] fre = new float[6][20];
-        float[][] loc = new float[6][20];
-        float[][] od = new float[6][20];
-        float[][] bb = new float[6][20];
-        float[][] ds = new float[6][20];
+        float[][] fre = new float[6][row_s];
+        float[][] loc = new float[6][row_s];
+        float[][] od = new float[6][row_s];
+        float[][] bb = new float[6][row_s];
+        float[][] ds = new float[6][row_s];
         String[] temp;
 
-        float[][] initPop = new float[21][5];
-        float[][] curPop = new float[21][5];
-        float[][] nexPop = new float[21][5];
-        float[][] finalPop = new float[21][5];
+        float[][] initPop = new float[row_s+1][5];
+        float[][] curPop = new float[row_s+1][5];
+        float[][] nexPop = new float[row_s+1][5];
+        float[][] finalPop = new float[row_s+1][5];
 
-        float[] resValue =new float[21];
+        float[] resValue =new float[row_s+1];
         
         List<Transaction> listdata = transactionJDBCRepository.findAlltransactions();
         //System.out.println(listdata);
@@ -63,7 +66,7 @@ public class Creditcardfraud {
         NextGen ng= new NextGen();
         int l=0,m=0;
 
-        for(int i=0;i<20;i++)
+        for(int i=0;i<row_s;i++)
         {
 
             res= dt.ccfreq(cc.data[i]);
@@ -86,7 +89,7 @@ public class Creditcardfraud {
         }
         l=0;m=0;
 
-        for(int i=0;i<20;i++)
+        for(int i=0;i<row_s;i++)
         {
             res= dt.ccloc(cc.data[i]);
             if(res[0]>=1)
@@ -111,7 +114,7 @@ public class Creditcardfraud {
 
         l=0;m=0;
 
-        for(int i=0;i<20;i++)
+        for(int i=0;i<row_s;i++)
         {
             res= dt.ccod(cc.data[i]);
 
@@ -137,7 +140,7 @@ public class Creditcardfraud {
 
         l=0;m=0;
 
-        for(int i=0;i<20;i++)
+        for(int i=0;i<row_s;i++)
         {
             res= dt.ccbb(cc.data[i]);
             if(res[0]>=1)
@@ -163,7 +166,7 @@ public class Creditcardfraud {
 
         l=0;m=0;
 
-        for(int i=0;i<20;i++)
+        for(int i=0;i<row_s;i++)
         {
             res= dt.ccds(cc.data[i]);
             if(res[0]>=1)
@@ -187,7 +190,7 @@ public class Creditcardfraud {
 
 
 
-        for(int i=0;i<20;i++)
+        for(int i=0;i<row_s;i++)
         {
             for(int j=0;j<=4;j++)
             {
@@ -202,13 +205,13 @@ public class Creditcardfraud {
         curPop=initPop;
 
 
-        for(int q=0;q<20;q++)
+        for(int q=0;q<row_s;q++)
         {
-            nexPop=ng.getNextGen(curPop);
+            nexPop=ng.getNextGen(curPop,row_s);
             System.out.println(" \n");
             System.out.println(" Current Popoulation - Generation -  "+q);
             System.out.println("___________________________________________ \n");
-            for(int i=1;i<=20;i++)
+            for(int i=0;i<row_s;i++)
             {
                 for(int j=0;j<=4;j++)
                 {
@@ -223,25 +226,27 @@ public class Creditcardfraud {
 
 
 
-            resValue = dt.resValue(curPop);
+            resValue = dt.resValue(curPop,row_s);
 
             Arrays.sort(resValue);
 
-            for(int i=0;i<20;i++)
+            for(int i=0;i<row_s;i++)
             {
                 System.out.println(resValue[i]);
             }
 
 
         }
-        float criti=resValue[15];
-        float monit=resValue[10];
-        float ordin=resValue[5];
+        int factor=(int) (row_s/4);
+        int[] d= new int[] {factor*1,factor*2,factor*3};
+        float criti=resValue[d[2]];
+        float monit=resValue[d[1]];
+        float ordin=resValue[d[0]];
 
         System.out.println("\n\n Critical Values of each transaction of given DataSet");
         System.out.println(" ----------------------------------------------------------- ");
 
-        float[][] finalresult = dt.organize(fre,loc,od,bb,ds);
+        float[][] finalresult = dt.organize(fre,loc,od,bb,ds,row_s);
 
         System.out.println("\n\n Value of Critic, Monitor and Ordinary Faruds");
         System.out.println("\n\n "+criti+"  "+monit+"   "+ordin);
@@ -249,7 +254,7 @@ public class Creditcardfraud {
 
         System.out.println(" \n\n Fraud Detected used Genetic Algorithm: ");
         System.out.println("--------------------------------------------- ");
-        for(int i=0;i<=19;i++)
+        for(int i=0;i<row_s;i++)
         {
             if((finalresult[i][2])>= criti)
             {
@@ -270,7 +275,7 @@ public class Creditcardfraud {
         System.out.println("Monitorable Fraud Detected:  ");
         System.out.println("-------------------------------- ");
 
-        for(int i=0;i<=19;i++)
+        for(int i=0;i<=row_s;i++)
         {
             if(((finalresult[i][2])>= monit) && ((finalresult[i][2])< criti))
             {
@@ -292,7 +297,7 @@ public class Creditcardfraud {
 
         System.out.println("Ordinary Fraud Detected:  ");
         System.out.println("--------------------------------------- ");
-        for(int i=0;i<=19;i++)
+        for(int i=0;i<row_s;i++)
         {
             if(((finalresult[i][2])< monit) && (finalresult[i][1])>0.0)
             {

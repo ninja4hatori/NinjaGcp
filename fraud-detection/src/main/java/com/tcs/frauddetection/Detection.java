@@ -1,7 +1,7 @@
 package com.tcs.frauddetection;
 
 public class Detection {
-	
+
 	
 	public float[] ccfreq(String[] a) {
 		float[] res = new float[2];
@@ -112,16 +112,16 @@ public class Detection {
 	}
 	
 
-	public float[][] organize(float[][] fre,float[][] loc,float[][] od,float[][] bb,float[][] ds)
+	public float[][] organize(float[][] fre,float[][] loc,float[][] od,float[][] bb,float[][] ds,int row_s)
 	{
 	//	System.out.println(" ");
 	//	System.out.println(" final");
-		float[][] result=new float[20][20];
+		float[][] result=new float[500][500];
 		float now;
 		float id=Float.valueOf(11111),val=(float)0;
 		int ins=0,z=0;
 				
-		for(int i=0;i<=19;i++)
+		for(int i=0;i<row_s;i++)
 		{
 			now =id;
 		//	System.out.println(now);
@@ -164,7 +164,7 @@ public class Detection {
 		}
 		
 		System.out.println(" AccountNo\tFraud Occurance\tCritical Value");
-		for(int i=0;i<=19;i++)
+		for(int i=0;i<row_s;i++)
 		 {
 			 for(int j=0;j<=2;j++)
 			 {
@@ -179,14 +179,14 @@ public class Detection {
 		return result;
 	}
 	
-	public float[] resValue(float[][] a)
+	public float[] resValue(float[][] a, int row_s)
 	{
-		float[] res=new float[21];
-		float[][] b=new float[21][6];
+		float[] res=new float[row_s];
+		float[][] b=new float[row_s+1][6];
 		b=a;
 		float sum =0;
 				
-		for(int i=1;i<=20;i++)
+		for(int i=0;i<row_s;i++)
 		{
 			for(int j=0;j<=4;j++)
 			{
@@ -195,7 +195,7 @@ public class Detection {
 			res[i]=sum;
 			sum=0;
 		}
-		
+
 		return res;
 	}
 }

@@ -4,31 +4,31 @@ import java.util.Random;
 
 public class NextGen {
 	static int u=0;
+
 	
-	
-	public float[][] getNextGen(float[][] a)
+	public float[][] getNextGen(float[][] a,int row_s)
 	{
-		float[][] curPop=new float[21][6];
+		float[][] curPop=new float[row_s+1][6];
 		curPop=a;
-		float[][] temp1 = new float [21][5];
-		float [][] res=new float[21][5];
-		float[][] temp =new float[21][5];
+		float[][] temp1 = new float [row_s+1][5];
+		float [][] res=new float[row_s+1][5];
+		float[][] temp =new float[row_s+1][5];
 		float[] x=new float[5];
 		float[] y=new float[5];
         float[] z=new float[5];
-		int cur=1;
+		int cur=0;
 		Evaluate ev = new Evaluate();
 		int[] elite = new int[2];
 		if(u<1)
 		{
 			System.out.println(" ***************");
-		elite = ev.findElite(curPop);
+		elite = ev.findElite(curPop,row_s);
 		u=1;
 		}
 		else
 		{
 			System.out.println(" *************** ");
-		elite = ev.findElite(curPop);		
+		elite = ev.findElite(curPop,row_s);
 		}
 		int b=elite[0], c=elite[1];
 		res[cur]=curPop[b];cur++;		
@@ -40,8 +40,8 @@ public class NextGen {
 		for(int i=0;i<=8;i++)
 		{
 	
-		int rand = randomGen.nextInt(19);
-		int rand1 = randomGen.nextInt(19);
+		int rand = randomGen.nextInt(row_s-1);
+		int rand1 = randomGen.nextInt(row_s-1);
 
 		if(rand==0)
 			rand=rand1;
