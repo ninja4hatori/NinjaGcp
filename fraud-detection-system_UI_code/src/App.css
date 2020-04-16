@@ -37,7 +37,6 @@
   }
 }
 
-
 .Card {
   background-color: white;
   padding: 32px;
@@ -50,13 +49,9 @@
 }
 
 .File-upload {
-text-align: center;
-min-height: 50vh;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-font-size: calc(10px + 2vmin);
+  margin-top: 4%;
+  margin-left: 4%;
+  width: 35%;
 }
 
 .nav-link.active {
@@ -68,4 +63,8 @@ font-size: calc(10px + 2vmin);
 
 .btn {
   font-size: 15px !important;
+}
+
+a.nav-link {
+  margin-right: 0px !important;
 }

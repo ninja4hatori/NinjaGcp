@@ -42,7 +42,7 @@ class Dropzone extends Component {
     event.preventDefault();
     if (this.props.disabed) return;
     const files = event.dataTransfer.files;
-    if (this.props.onFilesAdded && files.length<2) {
+    if (this.props.onFilesAdded && files.length < 2) {
       const array = this.fileListToArray(files);
       this.props.onFilesAdded(array);
     } else {
@@ -70,17 +70,15 @@ class Dropzone extends Component {
         style={{ cursor: this.props.disabled ? "default" : "pointer" }}
       >
         <input
+          id="fileDialogOpener"
           accept="text/csv"
           ref={this.fileInputRef}
           className="FileInput"
           type="file"
-          onChange={this.onFilesAdded} hidden
+          onChange={this.onFilesAdded}
+          hidden
         />
-        <img
-          alt="upload"
-          className="Icon"
-          src="upload.svg"
-        />
+        <img alt="upload" className="Icon" src="upload.svg" />
         <span>Upload CSV</span>
       </div>
     );
