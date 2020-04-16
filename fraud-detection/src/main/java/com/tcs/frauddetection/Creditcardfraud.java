@@ -179,7 +179,7 @@ public class Creditcardfraud {
                 {
                     t_id= fdata.getId();
                 }
-                transactionJDBCRepository.insert_fraud(new Fraud(parseInt(data[i][0]),t_id,df.format(dt1),"DAIILY_SPENDING",res[1]));
+                transactionJDBCRepository.insert_fraud(new Fraud(parseInt(data[i][0]),t_id,df.format(dt1),"DAILY_SPENDING",res[1]));
 
                 l++;m=0;
             }

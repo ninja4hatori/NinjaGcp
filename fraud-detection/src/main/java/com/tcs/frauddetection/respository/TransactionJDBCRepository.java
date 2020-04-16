@@ -9,18 +9,19 @@ import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.TimeZone;
 import java.util.List;
-
-import com.tcs.frauddetection.bean.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import static jdk.nashorn.internal.objects.Global.getDate;
+import com.tcs.frauddetection.bean.Fraud;
+import com.tcs.frauddetection.bean.SearchFraudTransactionRequestDto;
+import com.tcs.frauddetection.bean.SearchTransactionRequestDto;
+import com.tcs.frauddetection.bean.Significant_fraud;
+import com.tcs.frauddetection.bean.Transaction;
+import com.tcs.frauddetection.bean.UpdateRemarks;
 
 /**
  * @author Sudarshan
