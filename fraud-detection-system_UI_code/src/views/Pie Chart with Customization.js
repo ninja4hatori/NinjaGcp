@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import CanvasJSReact from "../assets/canvasjs.react";
+import "./Pie Chart with Customization.css";
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 class PieChartWithCustomization extends Component {
@@ -14,7 +15,12 @@ class PieChartWithCustomization extends Component {
       (transactionObj) => transactionObj.fraud_type.toUpperCase() === "MONITOR"
     ).length;
 
-    const freqRecordCount = this.props.resultData.freqArr.length;
+    setTimeout(() => {
+      document.getElementsByClassName("canvasjs-chart-credit")[0].innerHTML =
+        "";
+      document.getElementsByClassName("canvasjs-chart-credit")[1].innerHTML =
+        "";
+    }, 500);
 
     const options = {
       theme: "light1",
@@ -41,12 +47,12 @@ class PieChartWithCustomization extends Component {
             {
               y: monitorRecordCount,
               label: "Monitorable frauds",
-              color: "gold",
+              color: "#ff6200",
             },
             {
               y: ordinaryRecordCount,
               label: "Ordinary frauds",
-              color: "darkblue",
+              color: "#f5c647",
             },
           ],
         },
@@ -97,13 +103,13 @@ class PieChartWithCustomization extends Component {
 
     return (
       <div>
-        <div style={{ marginBottom: 35 + "px" }}>
+        <div style={{ width: 49 + "%", float: "left" }}>
           <CanvasJSChart
             options={options}
             /* onRef={ref => this.chart = ref} */
           />
         </div>
-        <div style={{ marginBottom: 35 + "px" }}>
+        <div style={{ width: 49 + "%", float: "left" }}>
           <CanvasJSChart
             options={options2}
             /* onRef={ref => this.chart = ref} */

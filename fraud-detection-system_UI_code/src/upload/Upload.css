@@ -48,7 +48,7 @@
   flex: 1;
   flex-direction: column;
   justify-content: space-between;
-  height: 50px;
+  height: fit-content;
   padding: 8px;
   overflow: hidden;
   box-sizing: border-box;
@@ -92,4 +92,3 @@ button {
   color: #fff;
   outline: 0;
 }
-
