@@ -116,7 +116,7 @@ public class Detection {
 	{
 	//	System.out.println(" ");
 	//	System.out.println(" final");
-		float[][] result=new float[500][500];
+		float[][] result=new float[50000][500];
 		float now;
 		float id=Float.valueOf(11111),val=(float)0;
 		int ins=0,z=0;

@@ -24,7 +24,7 @@ public class Creditcardfraud {
 
     @Autowired
     private  TransactionJDBCRepository transactionJDBCRepository;
-    public  static String[][] data = new String[500][50];
+    public  static String[][] data = new String[50000][50];
 
     public Map<String, Object> find(int row_s)
     {
@@ -34,11 +34,11 @@ public class Creditcardfraud {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Creditcardfraud cc=new Creditcardfraud();
         float[] res = null;
-        float[][] fre = new float[6][row_s];
-        float[][] loc = new float[6][row_s];
-        float[][] od = new float[6][row_s];
-        float[][] bb = new float[6][row_s];
-        float[][] ds = new float[6][row_s];
+        float[][] fre = new float[row_s][row_s];
+        float[][] loc = new float[row_s][row_s];
+        float[][] od = new float[row_s][row_s];
+        float[][] bb = new float[row_s][row_s];
+        float[][] ds = new float[row_s][row_s];
         String[] temp;
 
         float[][] initPop = new float[row_s+1][5];
@@ -54,7 +54,7 @@ public class Creditcardfraud {
         for (Transaction fdata : listdata) {
 
             String s = fdata.getCard_id() + "," + fdata.getAuth() + "," + fdata.getCur_bb() + "," + fdata.getCard_used() + "," + fdata.getAvg_bb() + "," + fdata.getOverdraft() + "," + fdata.getCc_age() + "," + fdata.getCut() + "," + fdata.getLoc() + "," + fdata.getLoct() + "," + fdata.getOdt() + "," + fdata.getAmount();
-            System.out.println(s);
+            //System.out.println(s);
             temp = s.split(",");
 
             cc.data[ip] = temp;
@@ -190,36 +190,18 @@ public class Creditcardfraud {
 
 
 
-        for(int i=0;i<row_s;i++)
-        {
-            for(int j=0;j<=4;j++)
-            {
-                System.out.print(initPop[i][j]);
-                System.out.print("\t ");
-            }
-            System.out.println("");
-        }
 
-        System.out.println("********* end of INIT Population ");
+
 
         curPop=initPop;
 
 
-        for(int q=0;q<row_s;q++)
+        for(int q=0;q<20;q++)
         {
             nexPop=ng.getNextGen(curPop,row_s);
             System.out.println(" \n");
-            System.out.println(" Current Popoulation - Generation -  "+q);
-            System.out.println("___________________________________________ \n");
-            for(int i=0;i<row_s;i++)
-            {
-                for(int j=0;j<=4;j++)
-                {
-                    System.out.print(nexPop[i][j]);
-                    System.out.print("\t ");
-                }
-                System.out.println(" ");
-            }
+
+
             curPop=nexPop;
 
             System.out.println(" \n\n Critical Values Found after Limited number of Generations (sorted order)");
@@ -230,18 +212,17 @@ public class Creditcardfraud {
 
             Arrays.sort(resValue);
 
-            for(int i=0;i<row_s;i++)
+           /* for(int i=0;i<row_s;i++)
             {
                 System.out.println(resValue[i]);
-            }
+            }*/
 
 
         }
-        int factor=(int) (row_s/4);
-        int[] d= new int[] {factor*1,factor*2,factor*3};
-        float criti=resValue[d[2]];
-        float monit=resValue[d[1]];
-        float ordin=resValue[d[0]];
+        float factor=(resValue[row_s-1]/4);
+        float criti=factor*3;
+        float monit=factor*2;
+        float ordin=factor;
 
         System.out.println("\n\n Critical Values of each transaction of given DataSet");
         System.out.println(" ----------------------------------------------------------- ");
