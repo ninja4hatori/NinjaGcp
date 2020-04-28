@@ -1,0 +1,47 @@
+.page-banner {
+  background-color: var(--themeColor);
+  color: var(--themeTextColor);
+  height: calc(10px + 12.18vh);
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+.header {
+  font-weight: 700;
+  font-size: calc(10px + 2vw);
+  justify-self: center;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.team-logo {
+  height: calc(20px + 14.68vh);
+  margin-top: auto;
+  width: 220px;
+}
+
+.welcome-message {
+  text-align: right;
+  margin-right: 0px;
+  margin-bottom: 0px;
+  top: calc(10px + 12.18vh);
+  background-color: var(--themeColor);
+  color: var(--themeTextColor);
+  font-size: calc(10px + 0.2vw);
+  height: calc(10px + 2.2vh);
+  position: fixed;
+  left: 220px;
+  width: calc(100vw - 220px);
+}
+
+.logout-btn {
+  margin-left: 20px;
+  background: var(--themeTextColor);
+  color: var(--themeColor);
+}

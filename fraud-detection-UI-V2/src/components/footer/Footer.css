@@ -1,0 +1,21 @@
+.theme-toggler-btn {
+  background-color: var(--themeColor);
+  color: var(--themeTextColor);
+  border-radius: 10px;
+  margin-left: 20px;
+}
+
+.footer {
+  background-color: var(--themeColor);
+  color: var(--themeTextColor);
+  height: 30px;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,193 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  --themeColor: #006a4b;
+  --themeTextColor: white;
+}
+
+/* dark theme */
+html[data-theme="rbs"] {
+  --themeColor: #05286a;
+  --themeTextColor: white;
+}
+
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *:before,
+html.theme-transition *:after {
+  transition: all 750ms !important;
+  transition-delay: 0 !important;
+}
+
+.content-area {
+  margin-top: calc(10px + 12.18vh);
+}
+
+.content-area-loggedin {
+  margin-top: calc(20px + 14.38vh);
+  overflow-y: auto;
+}
+
+.nav-link.active {
+  color: var(--themeTextColor) !important;
+  font-weight: bold !important;
+  background-color: var(--themeColor) !important;
+  border-color: #dee2e6 #dee2e6 #fff !important;
+  border-radius: 0px !important;
+}
+
+.dummy-border {
+  border-color: var(--themeColor) #dee2e6 #dee2e6 !important;
+  border-radius: 0px !important;
+}
+
+.inactive {
+  color: var(--themeColor);
+  font-weight: bold;
+  border-radius: 0px !important;
+  border-color: var(--themeColor) #dee2e6 #dee2e6 !important;
+}
+
+a.nav-link {
+  margin-right: 0px !important;
+}
+
+a:focus,
+a:hover {
+  color: var(--themeColor);
+}
+
+.File-upload {
+  margin-top: 4%;
+  margin-left: 4%;
+  width: 35%;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px var(--themeColor);
+  border-radius: 20px;
+  box-shadow: inset 0 0 6px var(--themeColor);
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px var(--themeColor);
+  box-shadow: inset 0 0 6px var(--themeColor);
+}
+
+.tab-pane.active {
+  overflow-y: auto;
+  height: calc(100vh - 14.68vh - 20px - 42px - 30px);
+}
+
+.sticky {
+  position: fixed;
+  top: calc(62px + 14.68vh);
+}
+
+.primary-theme-button {
+  background-color: var(--themeColor) !important;
+  color: var(--themeTextColor) !important;
+
+  font-family: "Roboto medium", sans-serif;
+  font-size: 14px;
+  display: inline-block;
+  height: 36px;
+  min-width: 88px;
+  padding: 6px 16px;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0;
+  border-radius: 2px;
+  outline: 0;
+}
+
+.secondary-theme-button {
+  background-color: var(--themeTextColor) !important;
+  color: var(--themeColor) !important;
+  border: 1px solid var(--themeColor) !important;
+  font-family: "Roboto medium", sans-serif;
+  font-size: 14px;
+  display: inline-block;
+  height: 36px;
+  min-width: 88px;
+  padding: 6px 16px;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0;
+  border-radius: 2px;
+  outline: 0;
+}
+
+.secondary-theme-button-with-float {
+  background-color: var(--themeTextColor) !important;
+  color: var(--themeColor) !important;
+  border: 1px solid var(--themeColor) !important;
+  font-family: "Roboto medium", sans-serif;
+  font-size: 14px;
+  display: inline-block;
+  height: 36px;
+  min-width: 88px;
+  padding: 6px 16px;
+  line-height: 1.42857143;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: middle;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 0;
+  border-radius: 2px;
+  outline: 0;
+  float: right;
+  margin-top: -10px;
+}
+
+.primary-theme-button:disabled {
+  background-color: var(--themeColor) !important;
+  color: var(--themeTextColor) !important;
+
+  cursor: not-allowed !important;
+  opacity: 0.65 !important;
+}
+
+.secondary-theme-button:disabled {
+  background-color: var(--themeTextColor) !important;
+  color: var(--themeColor) !important;
+  border: 1px solid var(--themeColor) !important;
+  cursor: not-allowed !important;
+  opacity: 0.65 !important;
+}
+
+.modalHeader {
+  background-color: var(--themeColor) !important;
+  color: var(--themeTextColor) !important;
+}

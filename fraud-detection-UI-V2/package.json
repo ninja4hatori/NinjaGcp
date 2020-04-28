@@ -1,0 +1,52 @@
+{
+  "name": "fraud-detection-system",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@o2xp/react-datatable": "^1.1.48",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.5.0",
+    "@testing-library/user-event": "^7.2.1",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
+    "classnames": "^2.2.6",
+    "cors": "^2.8.5",
+    "csv": "^5.3.2",
+    "express": "^4.16.4",
+    "formidable": "^1.2.1",
+    "fs": "0.0.1-security",
+    "jquery": "^3.4.1",
+    "multer": "^1.4.2",
+    "react": "^16.13.1",
+    "react-bootstrap": "^1.0.0",
+    "react-csv": "^2.0.3",
+    "react-data-components": "^1.2.0",
+    "react-dom": "^16.13.1",
+    "react-excel-workbook": "0.0.4",
+    "react-scripts": "3.4.1",
+    "react-spinners": "^0.8.1",
+    "react-to-pdf": "0.0.11",
+    "reactstrap": "^8.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}

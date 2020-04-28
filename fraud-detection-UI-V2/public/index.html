@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <script type="text/javascript" src="%PUBLIC_URL%/tableExport.js"></script>
+    <script type="text/javascript" src="%PUBLIC_URL%/jquery.base64.js"></script>
+
+    <script
+      type="text/javascript"
+      src="%PUBLIC_URL%/jspdf/libs/sprintf.js"
+    ></script>
+    <script type="text/javascript" src="%PUBLIC_URL%/jspdf/jspdf.js"></script>
+    <script
+      type="text/javascript"
+      src="%PUBLIC_URL%/jspdf/libs/base64.js"
+    ></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+    />
+
+    <meta
+      name="description"
+      content="Credit card fraud detection web application"
+    />
+    <!--
+      manifest.json provides metadata used when your web app is installed on a
+      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
+
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>Fraud detection system</title>
+
+    <script type="text/javascript">
+      function exportToFile(tableId, fileType, fileName) {
+        var finalTableId = "#" + tableId;
+        console.log(tableId, fileType, fileName, finalTableId);
+
+        $(finalTableId).tableExport({
+          type: fileType,
+          escape: "false",
+          downloadFilename: fileName,
+        });
+      }
+    </script>
+
+    <script type="text/javascript">
+      // When the user scrolls the page, execute myFunction
+      window.onscroll = function () {
+        myFunction();
+      };
+
+      // Get the header
+      var header = document.getElementsByTagName("thead")[0];
+
+      // Get the offset position of the navbar
+      var sticky = header.offsetTop;
+
+      // Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+      function myFunction() {
+        console.log(window.pageYOffset, sticky);
+        if (window.pageYOffset > sticky) {
+          header.classList.add("sticky");
+        } else {
+          header.classList.remove("sticky");
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
+
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
+
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
+</html>
