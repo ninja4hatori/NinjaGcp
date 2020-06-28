@@ -1,8 +1,9 @@
 from google.cloud import bigquery
 client = bigquery.Client()
-filename = 'E:\\gcp\\test.csv'
-dataset_id = 'test'
-table_id = 'table1'
+#filename = 'E:\\gcp\\test.csv'
+filename = 'test.csv'
+dataset_id = 'dataset_ninja'
+table_id = 'test_table'
 
 dataset_ref = client.dataset(dataset_id)
 table_ref = dataset_ref.table(table_id)

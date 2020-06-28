@@ -9,10 +9,10 @@ date_time=x.strftime("%I%M")
 
 def client_query(client):
 
-    df = pd.DataFrame(columns=['name', 'id' ,'post']) 
+    df = pd.DataFrame(columns=['first_name', 'last_name' ,'email','country']) 
 
     query = """
-        SELECT first_name,id,title FROM `constant-tracer-251017.test.table2` where title like '%Engineer'
+        SELECT first_name,last_name,email,country FROM `intense-pier-262517.dataset_ninja.avrotable` where country  like '%Ukraine'
     """
     query_job = client.query(query)  # Make an API request.
 
@@ -20,7 +20,7 @@ def client_query(client):
     for row in query_job:
         # Row values can be accessed by field name or index.
         #print("{},{}".format(row[0],row[1]))
-        df = df.append({'name': row[0],'id': row[1],'post':row[2]}, ignore_index=True)
+        df = df.append({'first_name': row[0],'last_name': row[1],'email':row[2],'country':row[3]}, ignore_index=True)
     print(df)
 
     #applying some simple calculations on data
